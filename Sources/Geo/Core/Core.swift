@@ -44,23 +44,10 @@ final class Core {
     }
 
     func run(_ geo: Geo, namespace: String, storage: GeoStorage) throws {
-        try geo.dependencies.forEach { name in
-            var geo = storage.get(name: name, namespace: namespace)
-            if geo == nil {
-                // Use the command from any namespace if it is not in the current one.
-                let namespaces = storage.get(name: name)
-                if namespaces.count == 1, let firstNamespace = namespaces.first?.key {
-                    geo = storage.get(name: name, namespace: firstNamespace)
-                }
-            }
-            guard let geo else { return }
-
-            try run(geo, namespace: namespace, storage: storage)
-        }
-        try geo.commands.forEach { command in
+        try geo.commands.enumerated().forEach { index, command in
             let lines = command.components(separatedBy: .newlines)
             let title = lines.count > 1 ? "\(lines[0])…" : command
-            print(">".bold.yellow, title)
+            print("[\(index + 1)/\(geo.commands.count)]".green, title)
             try commandRunner.run(command: command)
         }
     }

@@ -7,37 +7,35 @@ final class GeoParser {
     func parseFile(at path: String) throws -> GeoMap {
         let content = try File.read(at: path)
         let yaml = try Yams.load(yaml: content)
-        guard let root = yaml as? [String: [String: Any]] else { return [:] }
+        guard let root = yaml as? [String: Any] else { return [:] }
 
+        let commandHelps = parseHelp(in: content)
         return root.reduce(into: [:]) { tasks, element in
+            let name = element.key
+            let help = commandHelps[name]
             let commands: [String]
-            let anyCommands = element.value[Keys.run]
-            if let stringCommands = anyCommands as? [String] {
-                commands = stringCommands
-            } else if let command = anyCommands as? String {
-                commands = [command]
+            if let string = element.value as? String {
+                commands = [string]
+            } else if let array = element.value as? [String] {
+                commands = array
             } else {
-                commands = []
+                return
             }
-
-            let dependencies: [String]
-            let anyDependencies = element.value[Keys.needs]
-            if let stringDependencies = anyDependencies as? [String] {
-                dependencies = stringDependencies
-            } else if let dependency = anyDependencies as? String {
-                dependencies = [dependency]
-            } else {
-                dependencies = []
-            }
-
-            guard !commands.isEmpty || !dependencies.isEmpty else { return }
-
-            let help = element.value[Keys.help] as? String
             tasks[element.key] = Geo(
+                name: name,
                 commands: commands,
-                help: help,
-                dependencies: dependencies
+                help: help
             )
+        }
+    }
+
+    private func parseHelp(in content: String) -> [String: String] {
+        // # Some command description
+        // command_name:
+        let matches = content.matches(of: #/^# ?(?<help>.*)\n(?<command>.*):$/#.anchorsMatchLineEndings())
+        return matches.reduce(into: [:]) { commandHelps, match in
+            let (command, help) = (match.output.command, match.output.help)
+            commandHelps[String(command)] = String(help)
         }
     }
 }

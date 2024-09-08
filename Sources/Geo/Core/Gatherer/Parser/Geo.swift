@@ -1,15 +1,15 @@
 struct Geo {
+    let name: String
     let commands: [String]
     let help: String?
-    let dependencies: [String]
 
     init(
+        name: String,
         commands: [String],
-        help: String? = nil,
-        dependencies: [String] = []
+        help: String? = nil
     ) {
+        self.name = name
         self.commands = commands
         self.help = help
-        self.dependencies = dependencies
     }
 }
