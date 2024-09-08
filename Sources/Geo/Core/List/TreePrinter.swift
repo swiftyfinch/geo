@@ -18,7 +18,7 @@ final class TreePrinter {
     private let infoStyle: ColorType = .named(.lightBlack)
     private let inMiddle = "├─"
     private let firstInRoot = "╭─"
-    private let singleInRoot = "──"
+    private let singleInRoot = "*"
     private let leaf = "╰─"
     private let pipe = "│"
 
