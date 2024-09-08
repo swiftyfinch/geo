@@ -17,15 +17,18 @@ final class GeoGatherer {
     private let parser: GeoParser
     private let locationPrefix: String
     private let defaultNamespace: String
+    private let fileExtension: String
 
     init(finder: GeoFinder,
          parser: GeoParser,
          locationPrefix: String,
-         defaultNamespace: String) {
+         defaultNamespace: String,
+         fileExtension: String) {
         self.finder = finder
         self.parser = parser
         self.locationPrefix = locationPrefix
         self.defaultNamespace = defaultNamespace
+        self.fileExtension = fileExtension
     }
 
     func gather() throws -> GeoStorage {
@@ -43,7 +46,9 @@ final class GeoGatherer {
 
     private func namespace(path: String) throws -> String {
         let file = try File.at(path)
-        let suffix = file.name.dropFirst("\(locationPrefix).".count)
+        let suffix = file.name
+            .dropFirst("\(locationPrefix).".count)
+            .dropLast(".\(fileExtension)".count)
         return suffix.isEmpty ? defaultNamespace : String(suffix)
     }
 

@@ -2,9 +2,12 @@ import Fish
 
 final class GeoFinder {
     private let locationPrefix: String
+    private let fileExtension: String
 
-    init(locationPrefix: String) {
+    init(locationPrefix: String,
+         fileExtension: String) {
         self.locationPrefix = locationPrefix
+        self.fileExtension = fileExtension
     }
 
     func findRecursively(at path: String) throws -> [String] {
@@ -27,6 +30,7 @@ final class GeoFinder {
             folder = try Folder.at(geoFolderPath)
         }
         return try folder.files()
+            .filter { $0.pathExtension == fileExtension }
             .filter { $0.name.hasPrefix(locationPrefix) }
             .map(\.path)
             .sorted(by: <)
