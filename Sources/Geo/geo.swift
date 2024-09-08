@@ -55,7 +55,7 @@ extension GeoCLT {
             guard let namespace, let geo = storage.get(name: name, namespace: namespace) else {
                 return print("Can't find geo with name: '\(name)'.")
             }
-            try core.run(geo, namespace: namespace, storage: storage)
+            try core.run(geo)
         }
     }
 

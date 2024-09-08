@@ -43,7 +43,7 @@ final class Core {
         return treePrinter.print(tree)
     }
 
-    func run(_ geo: Geo, namespace: String, storage: GeoStorage) throws {
+    func run(_ geo: Geo) throws {
         try geo.commands.enumerated().forEach { index, command in
             let lines = command.components(separatedBy: .newlines)
             let title = lines.count > 1 ? "\(lines[0])…" : command

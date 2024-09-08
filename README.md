@@ -1,3 +1,1 @@
 # Geo 🐚
-
-- [ ] Autocompletion?
