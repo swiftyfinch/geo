@@ -32,7 +32,7 @@ final class GeoParser {
     private func parseHelp(in content: String) -> [String: String] {
         // # Some command description
         // command_name:
-        let matches = content.matches(of: #/^# ?(?<help>.*)\n(?<command>.*):$/#.anchorsMatchLineEndings())
+        let matches = content.matches(of: #/^# ?(?<help>.*)(\n| )(?<command>.*):($| )/#.anchorsMatchLineEndings())
         return matches.reduce(into: [:]) { commandHelps, match in
             let (command, help) = (match.output.command, match.output.help)
             commandHelps[String(command)] = String(help)
