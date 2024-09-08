@@ -14,7 +14,10 @@ enum CommandRunnerError: LocalizedError {
 final class CommandRunner {
     private typealias Error = CommandRunnerError
 
-    func run(command: String) throws {
+    func run(
+        command: String,
+        output: FileHandle? = .standardOutput
+    ) throws {
         guard let shell = ProcessInfo.processInfo.environment[.shell] else {
             throw Error.missingShellEnv
         }
@@ -22,6 +25,7 @@ final class CommandRunner {
         let process = Process()
         process.executableURL = URL(filePath: shell)
         process.arguments = ["-c", command]
+        process.standardOutput = output
         try process.run()
         process.waitUntilExit()
     }

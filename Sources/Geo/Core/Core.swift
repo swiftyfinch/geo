@@ -45,10 +45,16 @@ final class Core {
 
     func run(_ geo: Geo) throws {
         try geo.commands.enumerated().forEach { index, command in
-            let lines = command.components(separatedBy: .newlines)
-            let title = lines.count > 1 ? "\(lines[0])…" : command
-            print("[\(index + 1)/\(geo.commands.count)]".green, title)
-            try commandRunner.run(command: command)
+            let lines = command.body.components(separatedBy: .newlines)
+            let title = lines.count > 1 ? "\(lines[0])…" : command.body
+            let prefix = command.body.hasPrefix("geo") ? "[in]".yellow : "[\(index + 1)/\(geo.commands.count)]".green
+            print(prefix, title)
+
+            let output: FileHandle? = command.mods.contains(.silent) ? nil : .standardOutput
+            try commandRunner.run(command: command.body, output: output)
+            if command.body.hasPrefix("geo") {
+                print("[out]".yellow)
+            }
         }
     }
 }

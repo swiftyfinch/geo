@@ -13,13 +13,22 @@ final class GeoParser {
         return root.reduce(into: [:]) { tasks, element in
             let name = element.key
             let help = commandHelps[name]
-            let commands: [String]
+            let rawCommands: [String]
             if let string = element.value as? String {
-                commands = [string]
+                rawCommands = [string]
             } else if let array = element.value as? [String] {
-                commands = array
+                rawCommands = array
             } else {
                 return
+            }
+            let commands = rawCommands.map { command in
+                var mods: CommandModes = []
+                var command = command
+                if command.hasPrefix("-") {
+                    mods.insert(.silent)
+                    command.removeFirst()
+                }
+                return Command(body: command, mods: mods)
             }
             tasks[element.key] = Geo(
                 name: name,
