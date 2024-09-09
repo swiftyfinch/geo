@@ -1,7 +1,8 @@
 final class Vault {
+    let commandName = "geo"
     let defaultNamespace = "."
-    private let locationPrefix = ".geo"
-    private let fileExtension = "yml"
+    let locationPrefix = ".geo"
+    let fileExtension = "yml"
 
     private(set) lazy var gatherer = GeoGatherer(
         finder: finder,
