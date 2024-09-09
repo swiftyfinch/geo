@@ -42,17 +42,20 @@ final class Core {
         return treePrinter.print(tree)
     }
 
-    func run(_ geo: Geo) throws {
-        try geo.commands.enumerated().forEach { index, command in
-            let lines = command.body.components(separatedBy: .newlines)
-            let title = lines.count > 1 ? "\(lines[0])…" : command.body
-            let prefix = command.body.hasPrefix("geo") ? "[in]".yellow : "[\(index + 1)/\(geo.commands.count)]".green
-            print(prefix, title)
+    func run(_ geo: Geo, storage: GeoStorage) throws {
+        let commands = try commandTreeIterator.traverse(geo, storage: storage)
+        try commands.enumerated().forEach { index, command in
+            let counter = "[\(index + 1)/\(commands.count)]".green
+            print(counter, command.body.oneline())
 
-            let output: FileHandle? = command.mods.contains(.silent) ? nil : .standardOutput
-            try commandRunner.run(command: command.body, output: output)
-            if command.body.hasPrefix("geo") {
-                print("[out]".yellow)
+            do {
+                try commandRunner.run(
+                    command: command.body,
+                    output: command.mods.contains(.quiet) ? nil : .standardOutput,
+                    errorOutput: command.mods.contains(.silent) ? nil : .standardError
+                )
+            } catch {
+                if !command.mods.contains(.ignoreErrors) { throw error }
             }
         }
     }
