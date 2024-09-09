@@ -16,7 +16,8 @@ final class CommandRunner {
 
     func run(
         command: String,
-        output: FileHandle? = .standardOutput
+        output: FileHandle? = .standardOutput,
+        errorOutput: FileHandle? = .standardError
     ) throws {
         guard let shell = ProcessInfo.processInfo.environment[.shell] else {
             throw Error.missingShellEnv
@@ -26,6 +27,7 @@ final class CommandRunner {
         process.executableURL = URL(filePath: shell)
         process.arguments = ["-c", command]
         process.standardOutput = output
+        process.standardError = errorOutput
         try process.run()
         process.waitUntilExit()
     }
