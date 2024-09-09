@@ -4,21 +4,20 @@ import Foundation
 final class Core {
     private let gatherer: GeoGatherer
     private let commandRunner: CommandRunner
+    private let commandTreeIterator: CommandTreeIterator
     private let treePrinter: TreePrinter
     private let defaultNamespace: String
 
     init(gatherer: GeoGatherer,
          commandRunner: CommandRunner,
+         commandTreeIterator: CommandTreeIterator,
          treePrinter: TreePrinter,
          defaultNamespace: String) {
         self.gatherer = gatherer
         self.commandRunner = commandRunner
+        self.commandTreeIterator = commandTreeIterator
         self.treePrinter = treePrinter
         self.defaultNamespace = defaultNamespace
-    }
-
-    func gatherGeo() throws -> GeoStorage {
-        try gatherer.gather()
     }
 
     func list(storage: GeoStorage) -> String {
@@ -36,9 +35,9 @@ final class Core {
         return treePrinter.print(tree)
     }
 
-    func list(namespace _: String, commands: GeoMap) -> String {
+    func list(namespace: GeoMap) -> String {
         let tree = TreeNode(name: ".")
-        let sortedCommands = commands.sorted { $0.key < $1.key }
+        let sortedCommands = namespace.sorted { $0.key < $1.key }
         tree.children += sortedCommands.map { TreeNode(name: $0.key, info: $0.value.help) }
         return treePrinter.print(tree)
     }
