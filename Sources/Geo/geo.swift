@@ -50,9 +50,9 @@ extension GeoCLT {
         switch try argumentParser.parse(arguments: arguments) {
         case .help:
             print(helpMessage)
-        case .unknown(let command):
+        case let .unknown(command):
             throw GeoError.plain("Unknown command: '\(command)'.")
-        case .list(_, let namespace?):
+        case let .list(_, namespace?):
             print(core.list(namespace: namespace))
         case .list(let storage, nil):
             print(core.list(storage: storage))
@@ -60,7 +60,7 @@ extension GeoCLT {
             try core.run(geo, storage: storage)
         case .noGeoFiles:
             print("There are no any '\(vault.locationPrefix)*.\(vault.fileExtension)' file.")
-        case .noGeo(let name):
+        case let .noGeo(name):
             print("Can't find geo with name: '\(name)'.")
         }
     }
