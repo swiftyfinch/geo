@@ -22,12 +22,7 @@ final class GeoParser {
                 return
             }
             let commands = rawCommands.map { command in
-                var mods: CommandModes = []
-                var command = command
-                if command.hasPrefix("-") {
-                    mods.insert(.silent)
-                    command.removeFirst()
-                }
+                let (mods, command) = parseMods(command: command)
                 return Command(body: command, mods: mods)
             }
             tasks[element.key] = Geo(
@@ -45,6 +40,22 @@ final class GeoParser {
             let (command, help) = (match.output.command, match.output.help)
             commandHelps[String(command)] = String(help)
         }
+    }
+
+    private func parseMods(command: String) -> (mods: CommandModes, command: String) {
+        var command = command
+        var mods: CommandModes = []
+        let availableMods: [Character: CommandModes] = [
+            "-": .quiet,
+            "=": .silent,
+            "+": .ignoreErrors
+        ]
+        while let first = command.first,
+              let mode = availableMods[first] {
+            mods.insert(mode)
+            command.removeFirst()
+        }
+        return (mods, command)
     }
 }
 
