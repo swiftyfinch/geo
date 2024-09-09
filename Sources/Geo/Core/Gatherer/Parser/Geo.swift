@@ -11,16 +11,13 @@ struct Command {
 }
 
 struct Geo {
-    let name: String
     let commands: [Command]
     let help: String?
 
     init(
-        name: String,
         commands: [Command],
         help: String? = nil
     ) {
-        self.name = name
         self.commands = commands
         self.help = help
     }

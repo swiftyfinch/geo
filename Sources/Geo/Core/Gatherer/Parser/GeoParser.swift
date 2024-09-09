@@ -31,7 +31,6 @@ final class GeoParser {
                 return Command(body: command, mods: mods)
             }
             tasks[element.key] = Geo(
-                name: name,
                 commands: commands,
                 help: help
             )
