@@ -30,6 +30,17 @@ final class CommandRunner {
         process.standardError = errorOutput
         try process.run()
         process.waitUntilExit()
+
+        if process.terminationStatus != 0 {
+            switch process.terminationReason {
+            case .exit:
+                throw GeoError.exit
+            case .uncaughtSignal:
+                throw GeoError.uncaughtSignal
+            @unknown default:
+                break
+            }
+        }
     }
 }
 

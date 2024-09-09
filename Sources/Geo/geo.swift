@@ -8,9 +8,20 @@ struct GeoCLT {
         do {
             try clt.run(arguments: CommandLine.arguments)
         } catch {
-            var standardError = FileHandle.standardError
             fflush(stdout) // We need to flush the print buffer before printing errors here.
-            print("✖︎".red, error.localizedDescription.red, to: &standardError)
+
+            var errorMessage: String?
+            switch error {
+            case let geoError as GeoError:
+                errorMessage = geoError.errorDescription
+            default:
+                errorMessage = error.beautifulErrorDescription
+            }
+            if let errorMessage {
+                var standardError = FileHandle.standardError
+                print("✖︎ \(errorMessage)".red, to: &standardError)
+            }
+
             exit(EXIT_FAILURE)
         }
     }

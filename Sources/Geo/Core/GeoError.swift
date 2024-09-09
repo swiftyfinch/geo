@@ -3,6 +3,8 @@ import Foundation
 enum GeoError: LocalizedError {
     case plain(String)
     case combined([LocalizedError])
+    case exit
+    case uncaughtSignal
 
     var errorDescription: String? {
         switch self {
@@ -12,6 +14,8 @@ enum GeoError: LocalizedError {
             return errors
                 .compactMap(\.errorDescription)
                 .joined(separator: "\n")
+        case .exit, .uncaughtSignal:
+            return nil
         }
     }
 }
