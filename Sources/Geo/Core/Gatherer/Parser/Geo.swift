@@ -2,8 +2,9 @@ struct CommandModes: OptionSet {
     let rawValue: Int
 
     static let normal: CommandModes = []
-    static let quiet = CommandModes(rawValue: 1 << 0)
-    static let silent = CommandModes(rawValue: 1 << 1)
+    static let quietOutput = CommandModes(rawValue: 1 << 0)
+    static let quietErrorOutput = CommandModes(rawValue: 1 << 1)
+    static let silent: CommandModes = [quietOutput, quietErrorOutput]
     static let ignoreErrors = CommandModes(rawValue: 1 << 2)
 }
 

@@ -51,7 +51,7 @@ final class Core {
             do {
                 try commandRunner.run(
                     command: command.body,
-                    output: command.mods.contains(.quiet) ? nil : .standardOutput,
+                    output: command.mods.contains(.quietOutput) ? nil : .standardOutput,
                     errorOutput: command.mods.contains(.silent) ? nil : .standardError
                 )
             } catch {

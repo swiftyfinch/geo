@@ -46,7 +46,7 @@ final class GeoParser {
         var command = command
         var mods: CommandModes = []
         let availableMods: [Character: CommandModes] = [
-            "-": .quiet,
+            "-": .quietOutput,
             "=": .silent,
             "+": .ignoreErrors
         ]
