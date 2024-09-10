@@ -43,7 +43,7 @@ extension GeoCLT {
             gatherer: vault.gatherer,
             commandRunner: vault.commandRunner,
             commandTreeIterator: vault.commandTreeIterator,
-            treePrinter: vault.treePrinter,
+            listBuilder: vault.listBuilder,
             defaultNamespace: vault.defaultNamespace
         )
 
@@ -52,8 +52,8 @@ extension GeoCLT {
             print(helpMessage)
         case let .unknown(command):
             throw GeoError.plain("Unknown command: '\(command)'.")
-        case let .list(_, namespace?):
-            print(core.list(namespace: namespace))
+        case let .list(storage, namespace?):
+            print(core.list(storage: storage, namespace: namespace))
         case .list(let storage, nil):
             print(core.list(storage: storage))
         case let .run(geo, storage):

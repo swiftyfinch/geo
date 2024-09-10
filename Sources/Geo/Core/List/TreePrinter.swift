@@ -2,12 +2,12 @@ import Rainbow
 
 final class TreeNode {
     let name: String
-    let info: String?
+    let help: String?
     var children: [TreeNode]
 
-    init(name: String, info: String? = nil, children: [TreeNode] = []) {
+    init(name: String, help: String? = nil, children: [TreeNode] = []) {
         self.name = name
-        self.info = info
+        self.help = help
         self.children = children
     }
 }
@@ -24,6 +24,8 @@ final class TreePrinter {
 
     func print(
         _ tree: TreeNode,
+        showHelp: Bool,
+        maxWidth: Int? = nil,
         height: Int = 0,
         first: Bool = false,
         last: Bool = false,
@@ -35,6 +37,8 @@ final class TreePrinter {
             if height > 0 { prefix += last ? "   " : "\(pipe)  " }
             let childOutput = print(
                 child,
+                showHelp: showHelp,
+                maxWidth: maxWidth,
                 height: height + 1,
                 first: index == 0,
                 last: index + 1 == tree.children.count,
@@ -44,9 +48,10 @@ final class TreePrinter {
         }
         if height > 0 {
             let label = tree.name.applyingCodes(labelStyle)
-            let info = tree.info.map { " # \($0)".applyingCodes(infoStyle) } ?? ""
             let arrow = arrow(isFirst: first, isLast: last, height: height)
-            output.insert((prefix + arrow).applyingCodes(arrowsStyle) + "\(label)\(info)", at: 0)
+            let line = (prefix + arrow).applyingCodes(arrowsStyle) + label
+            let help = showHelp ? help(tree.help, forLine: line, maxWidth: maxWidth) : ""
+            output.insert("\(line)\(help)", at: 0)
         }
         return output.joined(separator: "\n")
     }
@@ -62,5 +67,12 @@ final class TreePrinter {
             return "\(leaf) "
         }
         return "\(inMiddle) "
+    }
+
+    private func help(_ help: String?, forLine line: String, maxWidth: Int?) -> String {
+        guard let help else { return "" }
+        let shiftCount = (maxWidth ?? line.raw.count) - line.raw.count
+        let shift = String(repeating: " ", count: shiftCount)
+        return "\(shift) # \(help)".applyingCodes(infoStyle)
     }
 }

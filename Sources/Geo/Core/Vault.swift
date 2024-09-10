@@ -12,7 +12,6 @@ final class Vault {
         fileExtension: fileExtension
     )
     private(set) lazy var commandRunner = CommandRunner()
-    private(set) lazy var treePrinter = TreePrinter()
     private(set) lazy var argumentParser = GeoArgumentParser(
         gatherer: gatherer
     )
@@ -20,9 +19,14 @@ final class Vault {
         argumentParser: argumentParser,
         commandName: commandName
     )
+    private(set) lazy var listBuilder = ListBuilder(
+        treePrinter: treePrinter,
+        defaultNamespace: defaultNamespace
+    )
     private lazy var finder = GeoFinder(
         locationPrefix: locationPrefix,
         fileExtension: fileExtension
     )
     private lazy var parser = GeoParser()
+    private lazy var treePrinter = TreePrinter()
 }
