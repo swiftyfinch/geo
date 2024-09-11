@@ -18,14 +18,14 @@ final class TreePrinter {
     private let infoStyle: ColorType = .named(.lightBlack)
     private let inMiddle = "├─"
     private let firstInRoot = "╭─"
-    private let singleInRoot = "*"
     private let leaf = "╰─"
     private let pipe = "│"
 
     func print(
         _ tree: TreeNode,
         showHelp: Bool,
-        maxWidth: Int? = nil,
+        helpPosition: Int? = nil,
+        showRootLabel: Bool = false,
         height: Int = 0,
         first: Bool = false,
         last: Bool = false,
@@ -38,7 +38,8 @@ final class TreePrinter {
             let childOutput = print(
                 child,
                 showHelp: showHelp,
-                maxWidth: maxWidth,
+                helpPosition: helpPosition,
+                showRootLabel: showRootLabel,
                 height: height + 1,
                 first: index == 0,
                 last: index + 1 == tree.children.count,
@@ -46,22 +47,20 @@ final class TreePrinter {
             )
             output.append(childOutput)
         }
-        if height > 0 {
+        if height > 0 || showRootLabel {
             let label = tree.name.applyingCodes(labelStyle)
-            let arrow = arrow(isFirst: first, isLast: last, height: height)
+            let arrow = arrow(isFirst: first, isLast: last, height: height, showRootLabel: showRootLabel)
             let line = (prefix + arrow).applyingCodes(arrowsStyle) + label
-            let help = showHelp ? help(tree.help, forLine: line, maxWidth: maxWidth) : ""
+            let help = showHelp ? help(tree.help, forLine: line, helpPosition: helpPosition) : ""
             output.insert("\(line)\(help)", at: 0)
         }
         return output.joined(separator: "\n")
     }
 
-    private func arrow(isFirst: Bool, isLast: Bool, height: Int) -> String {
+    private func arrow(isFirst: Bool, isLast: Bool, height: Int, showRootLabel: Bool) -> String {
         if height == 0 {
             return ""
-        } else if height == 1 && isFirst && isLast {
-            return "\(singleInRoot) "
-        } else if height == 1 && isFirst {
+        } else if !showRootLabel && height == 1 && isFirst {
             return "\(firstInRoot) "
         } else if isLast {
             return "\(leaf) "
@@ -69,9 +68,9 @@ final class TreePrinter {
         return "\(inMiddle) "
     }
 
-    private func help(_ help: String?, forLine line: String, maxWidth: Int?) -> String {
+    private func help(_ help: String?, forLine line: String, helpPosition: Int?) -> String {
         guard let help else { return "" }
-        let shiftCount = (maxWidth ?? line.raw.count) - line.raw.count
+        let shiftCount = (helpPosition ?? line.raw.count) - line.raw.count
         let shift = String(repeating: " ", count: shiftCount)
         return "\(shift) # \(help)".applyingCodes(infoStyle)
     }
