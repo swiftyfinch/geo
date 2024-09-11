@@ -22,10 +22,21 @@ struct GeoStorage {
     }
 }
 
-extension GeoStorage: IteratorProtocol, Sequence {
-    mutating func next() -> (namespace: String, commands: GeoMap)? {
-        guard let first = namespaces.keys.first,
-              let namespace = namespaces.removeValue(forKey: first) else { return nil }
-        return (first, namespace)
+extension GeoStorage: IteratorProtocol, Sequence, Collection {
+    typealias Index = GeoNamespaces.Index
+    typealias Element = GeoNamespaces.Element
+
+    var startIndex: Index { namespaces.startIndex }
+    var endIndex: Index { namespaces.endIndex }
+
+    subscript(index: Index) -> Element { namespaces[index] }
+
+    func index(after index: Index) -> Index {
+        namespaces.index(after: index)
+    }
+
+    mutating func next() -> GeoNamespaces.Element? {
+        var iterator = namespaces.makeIterator()
+        return iterator.next()
     }
 }
