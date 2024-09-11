@@ -10,19 +10,25 @@ final class ListBuilder {
 
     func buildList(storage: GeoStorage, namespace: GeoMap? = nil) -> String {
         let tree: TreeNode
+        let showRootLabel: Bool
         if let namespace {
+            showRootLabel = false
             tree = buildTree(namespace: namespace)
+        } else if storage.count == 1, let namespace = storage.first {
+            showRootLabel = true
+            tree = buildTree(name: namespace.key, namespace: namespace.value)
         } else {
+            showRootLabel = false
             tree = buildTree(storage: storage)
         }
-        let list = treePrinter.print(tree, showHelp: false)
+        let list = treePrinter.print(tree, showHelp: false, showRootLabel: showRootLabel)
         let maxWidth = list.components(separatedBy: .newlines).map(\.raw.count).max()
-        return treePrinter.print(tree, showHelp: true, maxWidth: maxWidth)
+        return treePrinter.print(tree, showHelp: true, helpPosition: maxWidth, showRootLabel: showRootLabel)
     }
 
     private func buildTree(storage: GeoStorage) -> TreeNode {
         let tree = TreeNode(name: ".")
-        let sortedIterator = storage.sorted { $0.namespace < $1.namespace }
+        let sortedIterator = storage.sorted { $0.key < $1.key }
         for (namespace, commands) in sortedIterator {
             let sortedCommands = commands.sorted { $0.key < $1.key }
             let children = sortedCommands.map { TreeNode(name: $0.key, help: $0.value.help ?? "") }
@@ -35,8 +41,8 @@ final class ListBuilder {
         return tree
     }
 
-    private func buildTree(namespace: GeoMap) -> TreeNode {
-        let tree = TreeNode(name: ".")
+    private func buildTree(name: String? = nil, namespace: GeoMap) -> TreeNode {
+        let tree = TreeNode(name: name ?? ".")
         let sortedCommands = namespace.sorted { $0.key < $1.key }
         tree.children += sortedCommands.map { TreeNode(name: $0.key, help: $0.value.help ?? "") }
         return tree
