@@ -36,11 +36,25 @@ test1: +fastlane some-command
 ```
 
 ```sh
-..                           # Recursively
-├─ .geo.yml                  # Default namespace
-╰─ .                         # The current directory
-   ├─ .geo.namespace0.yml    # > geo namespace0 ...
-   ╰─ .geo                   # Can be a directory or a file
-      ├─ .geo.yml            # Default namespace
-      ╰─ .geo.namespace1.yml # > geo namespace1 ...
+.
+╰─ .geo.yml # Single file without namespaces
+```
+
+```sh
+.
+╰─ .geo
+   ├─ a.yml # Namespace: a
+   ╰─ b.yml # Namespace: b
+```
+
+
+```sh
+/
+├─ .geo.yml # General
+╰─ Folder0
+   ├─ .geo.yml # More specific
+   ╰─ Folder1
+      ├─ .geo.yml # More specific
+      ╰─ Folder3
+         ╰─ Folder2
 ```
