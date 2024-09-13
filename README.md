@@ -55,6 +55,6 @@ test1: +fastlane some-command
    ├─ .geo.yml # More specific
    ╰─ Folder1
       ├─ .geo.yml # More specific
-      ╰─ Folder3
+      ╰─ .
          ╰─ Folder2
 ```
