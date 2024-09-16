@@ -17,8 +17,8 @@ I have not found an existing tool that meets my needs for this task, so I have d
 
 ### Geo Philosophy
 
-`*` The task format should be as compact and simple as possible; \
-`*` It is just a tool for creating shortcuts, not for implementing them. \
+`*` The task format should be as `compact` and `simple` as possible; \
+`*` It is just a tool for `creating shortcuts`, not for implementing them. \
     All scripts should be stored in separate files, and then called from this tool using specific arguments; \
 `*` It should be possible to `manually call` without this tool if necessary.
 
