@@ -80,20 +80,24 @@ release:
 - cd Release && zip -r arm64.zip geo
 ```
 
+> [!NOTE]
+> You can call another task `geo lint` anywhere. \
+> It will be called within the same `geo` process, not separately.
+
 Then you can get a list of your commands:
 ```sh
 > geo
-.
-├─ lint    # Lints *.swift files.
+╭─ lint    # Lints *.swift files.
 ╰─ release # Builds and prepares binary for release.
 ```
 
 And finally, run the following command:
 ```sh
 > geo lint
+[1/1] swiftlint --strict --quiet
 ```
 
-### Commands hierarhy
+#### Commands hierarhy
 
 You can add commands to different directories and have them all run recursively. \
 It can be useful if you want to include some secret commands in your shared list:
