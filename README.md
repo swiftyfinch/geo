@@ -91,10 +91,19 @@ Then you can get a list of your commands:
 ╰─ release # Builds and prepares binary for release.
 ```
 
-And finally, run the following command:
+And finally, you can run the described commands:
 ```sh
 > geo lint
 [1/1] swiftlint --strict --quiet
+
+> geo release
+[1/7] swiftlint --strict --quiet
+[2/7] mkdir -p Release
+[3/7] swift package clean
+[4/7] swift build -c release --arch arm64
+[5/7] cp -f `swift build -c release --arch arm64 --show-bin-path`/geo Release/geo
+[6/7] strip -rSTx Release/geo
+[7/7] cd Release && zip -r arm64.zip geo
 ```
 
 #### Commands hierarhy
