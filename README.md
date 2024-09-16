@@ -58,3 +58,8 @@ test1: +fastlane some-command
       ╰─ .
          ╰─ .geo.yml # More specific
 ```
+
+## TODO:
+
+- [ ] Arguments?
+- [ ] Location releated tasks with dot prefix?
