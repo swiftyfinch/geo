@@ -48,7 +48,7 @@ If you don't need to split tasks into separate files for each team, you can just
 ╰─ .geo.yml # Single file without namespaces
 ```
 
-Otherwise, create a folder called `.geo` and place a file `*.yml` for each team in it:
+Otherwise, create a folder called `.geo` and place `*.yml` files for each team in it:
 ```sh
 .
 ╰─ .geo # Folder
