@@ -1,8 +1,15 @@
 # Lints *.swift files.
 lint: swiftlint --strict --quiet
 
+# Formats *.swift files.
+format: swiftformat . --lint --quiet
+
+# Lints & formats *.swift files.
+tidy: [geo lint, geo format]
+
 # Builds and prepares binary for release.
 release:
+- geo format # Call as dependency in the same geo process
 - geo lint # Call as dependency in the same geo process
 - mkdir -p Release
 - swift package clean
