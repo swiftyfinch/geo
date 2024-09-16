@@ -69,8 +69,15 @@ For example:
 # Lints *.swift files.
 lint: swiftlint --strict --quiet
 
+# Formats *.swift files.
+format: swiftformat . --lint --quiet
+
+# Lints & formats *.swift files.
+tidy: [geo lint, geo format]
+
 # Builds and prepares binary for release.
 release:
+- geo format # Call as dependency in the same geo process
 - geo lint # Call as dependency in the same geo process
 - mkdir -p Release
 - swift package clean
@@ -81,14 +88,16 @@ release:
 ```
 
 > [!NOTE]
-> You can call another task `geo lint` anywhere. \
+> You can call another task like `geo lint` anywhere. \
 > It will be called within the same `geo` process, not separately.
 
 Then you can get a list of your commands:
 ```sh
 > geo
-╭─ lint    # Lints *.swift files.
-╰─ release # Builds and prepares binary for release.
+╭─ format  # Formats *.swift files.
+├─ lint    # Lints *.swift files.
+├─ release # Builds and prepares binary for release.
+╰─ tidy    # Lints & formats *.swift files.
 ```
 
 And finally, you can run the described commands:
@@ -96,14 +105,22 @@ And finally, you can run the described commands:
 > geo lint
 [1/1] swiftlint --strict --quiet
 
+> geo format
+[1/1] swiftformat . --lint --quiet
+
+> geo tidy
+[1/2] swiftlint --strict --quiet
+[2/2] swiftformat . --lint --quiet
+
 > geo release
-[1/7] swiftlint --strict --quiet
-[2/7] mkdir -p Release
-[3/7] swift package clean
-[4/7] swift build -c release --arch arm64
-[5/7] cp -f `swift build -c release --arch arm64 --show-bin-path`/geo Release/geo
-[6/7] strip -rSTx Release/geo
-[7/7] cd Release && zip -r arm64.zip geo
+[1/8] swiftformat . --lint --quiet
+[2/8] swiftlint --strict --quiet
+[3/8] mkdir -p Release
+[4/8] swift package clean
+[5/8] swift build -c release --arch arm64
+[6/8] cp -f `swift build -c release --arch arm64 --show-bin-path`/geo Release/geo
+[7/8] strip -rSTx Release/geo
+[8/8] cd Release && zip -r arm64.zip geo
 ```
 
 #### Commands hierarhy
