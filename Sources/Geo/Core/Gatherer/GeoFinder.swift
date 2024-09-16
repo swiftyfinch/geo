@@ -24,16 +24,18 @@ final class GeoFinder {
     }
 
     private func find(at path: String) throws -> [String] {
-        var folder = try Folder.at(path)
-        let geoFolderPath = folder.subpath(locationPrefix)
-        if Folder.isExist(at: geoFolderPath) {
-            folder = try Folder.at(geoFolderPath)
+        var geoFiles: [IFile] = []
+        let folder = try Folder.at(path)
+        if let geoFolder = try? Folder.at(folder.subpath(locationPrefix)) {
+            geoFiles = try geoFolder.files()
+                .filter { $0.pathExtension == fileExtension }
+                .filter { !$0.name.hasPrefix(".") && !$0.name.hasPrefix(locationPrefix) }
+        } else {
+            let geoFile = try folder.files()
+                .first { $0.name == "\(locationPrefix).\(fileExtension)" }
+            geoFiles = geoFile.map { [$0] } ?? []
         }
-        return try folder.files()
-            .filter { $0.pathExtension == fileExtension }
-            .filter { $0.name.hasPrefix(locationPrefix) }
-            .map(\.path)
-            .sorted(by: <)
+        return geoFiles.map(\.path).sorted(by: <)
     }
 }
 

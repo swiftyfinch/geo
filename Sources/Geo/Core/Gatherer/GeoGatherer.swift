@@ -47,7 +47,7 @@ final class GeoGatherer {
     private func namespace(path: String) throws -> String {
         let file = try File.at(path)
         let suffix = file.name
-            .dropFirst("\(locationPrefix).".count)
+            .trimmingPrefix("\(locationPrefix).")
             .dropLast(".\(fileExtension)".count)
         return suffix.isEmpty ? defaultNamespace : String(suffix)
     }

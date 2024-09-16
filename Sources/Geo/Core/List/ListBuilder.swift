@@ -14,7 +14,7 @@ final class ListBuilder {
         if let namespace {
             showRootLabel = false
             tree = buildTree(namespace: namespace)
-        } else if storage.count == 1, let namespace = storage.first {
+        } else if storage.count == 1, let namespace = storage.first, namespace.key != defaultNamespace {
             showRootLabel = true
             tree = buildTree(name: namespace.key, namespace: namespace.value)
         } else {
@@ -31,7 +31,10 @@ final class ListBuilder {
         let sortedIterator = storage.sorted { $0.key < $1.key }
         for (namespace, commands) in sortedIterator {
             let sortedCommands = commands.sorted { $0.key < $1.key }
-            let children = sortedCommands.map { TreeNode(name: $0.key, help: $0.value.help ?? "") }
+            let children = sortedCommands.compactMap {
+                guard let help = $0.value.help else { return TreeNode?.none }
+                return TreeNode(name: $0.key, help: help)
+            }
             if namespace == defaultNamespace {
                 tree.children += children
             } else {
