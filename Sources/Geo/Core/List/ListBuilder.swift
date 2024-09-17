@@ -32,8 +32,7 @@ final class ListBuilder {
         for (namespace, commands) in sortedIterator {
             let sortedCommands = commands.sorted { $0.key < $1.key }
             let children = sortedCommands.compactMap {
-                guard let help = $0.value.help else { return TreeNode?.none }
-                return TreeNode(name: $0.key, help: help)
+                buildTreeNode(name: $0.key, geo: $0.value)
             }
             if namespace == defaultNamespace {
                 tree.children += children
@@ -47,7 +46,14 @@ final class ListBuilder {
     private func buildTree(name: String? = nil, namespace: GeoMap) -> TreeNode {
         let tree = TreeNode(name: name ?? ".")
         let sortedCommands = namespace.sorted { $0.key < $1.key }
-        tree.children += sortedCommands.map { TreeNode(name: $0.key, help: $0.value.help ?? "") }
+        tree.children += sortedCommands.compactMap {
+            buildTreeNode(name: $0.key, geo: $0.value)
+        }
         return tree
+    }
+
+    private func buildTreeNode(name: String, geo: Geo) -> TreeNode? {
+        guard let help = geo.help else { return TreeNode?.none }
+        return TreeNode(name: name, help: help)
     }
 }
