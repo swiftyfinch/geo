@@ -120,7 +120,7 @@ And finally, you can run the described commands:
 [8/8] cd Release && zip -r arm64.zip geo
 ```
 
-#### Commands hierarhy
+### Commands hierarhy
 
 You can add commands to different directories and have them all run recursively. \
 It can be useful if you want to include some secret commands in your shared list:
