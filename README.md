@@ -49,15 +49,15 @@ Otherwise, create a folder called `.geo` and place `*.yml` files for each team i
 ```sh
 .
 ╰─ .geo # Folder
-   ├─ charlie.yml # Namespace: charlie
-   ╰─ bravo.yml # Namespace: bravo
+   ├─ taiga.yml # Namespace: taiga team
+   ╰─ saiga.yml # Namespace: saiga team
 ```
 
 ### File Format
 
 Describe your commands in the following format:
 ```yaml
-# Description
+# Description must be here
 task_name: [String] or String
 ```
 
