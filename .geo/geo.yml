@@ -6,14 +6,3 @@ format: swiftformat . --lint --quiet
 
 # Lints & formats *.swift files.
 tidy: [geo lint, geo format]
-
-# Builds and prepares binary for release.
-release:
-- geo format # Call as dependency in the same geo process
-- geo lint # Call as dependency in the same geo process
-- mkdir -p Release
-- swift package clean
-- swift build -c release --arch arm64
-- cp -f `swift build -c release --arch arm64 --show-bin-path`/geo Release/geo
-- strip -rSTx Release/geo
-- cd Release && zip -r arm64.zip geo
