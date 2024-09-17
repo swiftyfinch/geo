@@ -3,12 +3,15 @@ import Rainbow
 
 @main
 struct GeoCLT {
+    private let version = "0.2.3"
+
     static func main() throws {
         let clt = GeoCLT(vault: Vault())
         do {
             try clt.run(arguments: CommandLine.arguments)
         } catch {
-            fflush(stdout) // We need to flush the print buffer before printing errors here.
+            // We need to flush the print buffer before printing errors here.
+            fflush(stdout)
 
             var errorMessage: String?
             switch error {
@@ -50,6 +53,8 @@ extension GeoCLT {
         switch try argumentParser.parse(arguments: arguments) {
         case .help:
             print(helpMessage)
+        case .version:
+            print(version)
         case let .unknown(command):
             throw GeoError.plain("Unknown command: '\(command)'.")
         case let .list(storage, namespace?):

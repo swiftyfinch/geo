@@ -1,6 +1,7 @@
 final class GeoArgumentParser {
     enum Kind {
         case help
+        case version
         case unknown(command: String)
         case list(storage: GeoStorage, namespace: GeoMap?)
         case run(geo: Geo, storage: GeoStorage)
@@ -25,6 +26,8 @@ final class GeoArgumentParser {
         let arguments = Array(arguments.dropFirst())
         if arguments.count > 0, ["-h", "--help"].contains(arguments[0]) {
             return .help
+        } else if arguments.count > 0, arguments[0] == "--version" {
+            return .version
         } else if arguments.count > 0, arguments[0].hasPrefix("-") {
             return .unknown(command: arguments.joined(separator: " "))
         }
