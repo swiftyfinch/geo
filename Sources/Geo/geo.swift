@@ -3,7 +3,7 @@ import Rainbow
 
 @main
 struct GeoCLT {
-    private let version = "0.2.3"
+    private let version = "0.2.4"
 
     static func main() throws {
         let clt = GeoCLT(vault: Vault())
