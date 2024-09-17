@@ -1,8 +1,5 @@
-# Geo 🐚
-
-The tiny tool for managing shell task shortcuts based on the current directory.
-
-<br>
+<h1 align="center">Geo 🐚</h1>
+<p align="center">The tiny tool for managing shell task shortcuts based on the current directory.</p>
 
 ## Motivation
 
