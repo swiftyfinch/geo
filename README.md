@@ -49,8 +49,8 @@ Otherwise, create a folder called `.geo` and place `*.yml` files for each team i
 ```sh
 .
 ╰─ .geo # Folder
-   ├─ taiga.yml # Namespace: taiga team
-   ╰─ saiga.yml # Namespace: saiga team
+   ├─ taiga.yml # Namespace for 'taiga' team
+   ╰─ saiga.yml # Namespace for 'saiga' team
 ```
 
 ### File Format
