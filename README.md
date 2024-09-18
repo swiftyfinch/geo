@@ -8,7 +8,7 @@
     </p>
 </p>
 
-## Motivation
+## 🎯 Motivation
 
 Usually, we have a few basic shell commands that are dependent on the repository. \
 It can be running `lint` or `tests`, etc.
@@ -36,7 +36,7 @@ I have not found an existing tool that meets my needs for this task, so I have d
 
 <br>
 
-## How to install 📦
+## 📦 How to install
 
 ```sh
 curl -Ls http://swiftyfinch.github.io/geo/install.sh | bash
@@ -44,7 +44,7 @@ curl -Ls http://swiftyfinch.github.io/geo/install.sh | bash
 
 <br>
 
-## How to use
+## 🕹️ How to use
 
 If you don't need to split tasks into separate files for each team, you can just create a single `.geo.yml` file in your repository:
 ```sh
@@ -142,10 +142,14 @@ It can be useful if you want to include some secret commands in your shared list
          ╰─ .geo.yml # More specific
 ```
 
+<br>
+
 ## 🤝 Contribution
 
 Feel free [to open a pull request](https://github.com/swiftyfinch/geo/contribute) or [a discussion](https://github.com/swiftyfinch/geo/discussions).
 
-## Misc
+<br>
+
+## 💬 Misc
 
 - Author of Fan Art: https://www.reddit.com/r/HollowKnight/comments/12imdep/geo/.
