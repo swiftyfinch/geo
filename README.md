@@ -1,5 +1,9 @@
-<h1 align="center">Geo 🐚</h1>
-<p align="center">The tiny tool for managing shell task shortcuts based on the current directory.</p>
+<p align="center">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://github.com/user-attachments/assets/208464fa-80b1-4212-b5de-cb200dfb92ea" width="500px">
+      <img src="https://github.com/user-attachments/assets/944db063-905c-4b46-9449-2e8ee2503bdb" width="500px">
+    </picture>
+</p>
 
 ## Motivation
 
@@ -134,3 +138,7 @@ It can be useful if you want to include some secret commands in your shared list
       ╰─ .
          ╰─ .geo.yml # More specific
 ```
+
+## Misc
+
+- Author of Fan Art: https://www.reddit.com/r/HollowKnight/comments/12imdep/geo/.
