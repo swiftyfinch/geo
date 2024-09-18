@@ -1,8 +1,11 @@
 <p align="center">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://github.com/user-attachments/assets/208464fa-80b1-4212-b5de-cb200dfb92ea" width="500px">
-      <img src="https://github.com/user-attachments/assets/944db063-905c-4b46-9449-2e8ee2503bdb" width="500px">
+      <source media="(prefers-color-scheme: dark)" srcset="https://github.com/user-attachments/assets/208464fa-80b1-4212-b5de-cb200dfb92ea" width="500px" />
+      <img src="https://github.com/user-attachments/assets/944db063-905c-4b46-9449-2e8ee2503bdb" width="500px" />
     </picture>
+    <p align="center">
+        <img src="https://img.shields.io/badge/Platform-macOS-2679eb" />
+    </p>
 </p>
 
 ## Motivation
@@ -138,6 +141,10 @@ It can be useful if you want to include some secret commands in your shared list
       ╰─ .
          ╰─ .geo.yml # More specific
 ```
+
+## 🤝 Contribution
+
+Feel free [to open a pull request](https://github.com/swiftyfinch/geo/contribute) or [a discussion](https://github.com/swiftyfinch/geo/discussions).
 
 ## Misc
 
