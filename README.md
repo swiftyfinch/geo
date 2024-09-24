@@ -1,7 +1,7 @@
 <p align="center">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://github.com/user-attachments/assets/208464fa-80b1-4212-b5de-cb200dfb92ea" width="500px" />
-      <img src="https://github.com/user-attachments/assets/944db063-905c-4b46-9449-2e8ee2503bdb" width="500px" />
+      <source media="(prefers-color-scheme: dark)" srcset="https://github.com/user-attachments/assets/b0249672-e4b1-48fc-baed-46ae4ba924f2" width="500px" />
+      <img src="https://github.com/user-attachments/assets/0f06e1e8-e135-4118-8c20-ba3735ce7af0" width="500px" />
     </picture>
     <p align="center">
         <img src="https://img.shields.io/badge/Platform-macOS-2679eb" />
