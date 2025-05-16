@@ -10,7 +10,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/swiftyfinch/Fish", from: "0.1.3"),
-        .package(url: "https://github.com/jpsim/Yams", from: "5.1.3"),
+        .package(url: "https://github.com/jpsim/Yams", from: "6.0.0"),
         .package(url: "https://github.com/onevcat/Rainbow", from: "4.0.1")
     ],
     targets: [
